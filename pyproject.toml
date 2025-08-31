@@ -1,0 +1,40 @@
+[build-system]
+build-backend = "setuptools.build_meta"
+requires = ["setuptools>=61.0", "wheel"]
+
+[project]
+authors = [
+  {name = "AClon314", email = "aclon-e@qq.com"},
+]
+description = "encode/decode any data into pure text with base-any"
+keywords = ["base64", "base", "unicode", "utf-8"]
+license = {file = "LICENSE"}
+name = "base-any"
+readme = "README.md"
+version = "0.1.0"
+
+classifiers = [
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python",
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Developers",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.7",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+]
+dependencies = []
+requires-python = ">=3.11"
+
+[project.optional-dependencies]
+dev = ["pytest"]
+
+[project.scripts]
+baseAny = "base_any:baseAny.main"
+
+[project.urls]
+Download = "http://github.com/AClon314/base-any/releases"
+Homepage = "http://github.com/AClon314/base-any"
