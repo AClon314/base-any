@@ -30,6 +30,8 @@ def encode_base(
     bits_per_char = int(log(len(dic), 2))
     dic = dic[: 2**bits_per_char]
     Bin = read_file(In, mode="rb")[0]
+    if len(Bin) % 17 == 0:
+        Log.info(f"Luck guy! Use arg '--bit 17' for higher compress!")
 
     # 使用 bitstring 处理数据
     bit_data = Bits(bytes=Bin)
