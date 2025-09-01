@@ -49,7 +49,7 @@ def encode_base(
         bit_chunk = bit_data[_i : _i + bits_per_char]
         index = bit_chunk.uint
         text += dic[index]
-    Log.debug(f"{index=}")
+    #Log.debug(f"{index=}")
 
     # 处理剩余的bit
     if (remain_bits := len_Bin_bits % bits_per_char) != 0:
@@ -131,7 +131,7 @@ def read_padding(text: str):
 
 def genDict(blacklist=" " + PAD, dic: Path = BASEU_TXT, skip_check=False):
     if dic.exists():
-        with open(dic, "r") as f:
+        with open(dic, "r", encoding="utf-8") as f:
             Dict = f.read()
         md5_Dict = md5(Dict.encode()).hexdigest()
         Log.debug(f"{md5_Dict=}\t{MD5_DICT=}")
@@ -156,7 +156,7 @@ def genDict(blacklist=" " + PAD, dic: Path = BASEU_TXT, skip_check=False):
             continue
         Dict += C
         valid += 1
-    with open(dic, "w") as f:
+    with open(dic, "w", encoding="utf-8") as f:
         f.write(Dict)
     Log.debug(f"chars Dict {valid=}\t({(valid*100/i):.0f}%)")
     return Dict
@@ -170,9 +170,10 @@ def read_file(*path: Path | Any, mode: Literal["rb"] = "rb") -> list[bytes]: ...
 
 def read_file(*path: Path | Any, mode: Literal["r", "rb"] = "r"):
     DATA = list(path)
+    codec = "utf-8" if mode == "r" else None
     for i, p in enumerate(path):
         if isinstance(p, Path):
-            with open(p, mode) as f:
+            with open(p, mode, encoding=codec) as f:
                 DATA[i] = f.read()
                 if isinstance(DATA[i], str):
                     DATA[i] = str(DATA[i]).strip()
@@ -198,7 +199,7 @@ def main():
             print(result)
         else:
             sys.stdout.buffer.write(result)
-            sys.stderr.write("pipe mode, write to file")
+            Log.warning("pipe mode, write to file")
     else:
         if isinstance(In, str):
             if ns.hex:
@@ -209,7 +210,9 @@ def main():
             else:
                 In = In.encode()
         result = encode_base(In, Dict)
-        print(result)
+        sys.stdout.write(result)
+
+        # print(result)
 
 
 def parser():
